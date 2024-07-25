@@ -36,9 +36,9 @@ export default async function UserCard({ user }: any) {
             ) : (
               <p className="mt-2 text-gray-500 dark:text-gray-400">No tags yet</p>
             )} */}
-            <span className="rounded-full bg-orange-100 px-5 py-1 text-sm font-medium text-brand-500">
+            {/* <span className="rounded-full bg-orange-100 px-5 py-1 text-sm font-medium text-brand-500">
               Reputation {getFormatNumber(user.reputation)}
-            </span>
+            </span> */}
           </div>
         </div>
       </article>
