@@ -11,6 +11,8 @@ import NoResult from '@/components/no-result';
 import { tagVariants } from '@/components/tags-badge';
 import { cn } from '@/lib/utils';
 import Pagination from '@/components/pagination';
+import { UserCircle, UserPlus } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Dropofe| Tags',
@@ -38,6 +40,15 @@ export default async function TagsPage({ searchParams }: SearchParamsProps) {
           className="flex-1"
         />
         <Filter filters={TagFilters} />
+        <div className="flex flex-col gap-3">
+            <Link
+              href=""
+              className={cn(buttonVariants(), 'btn-secondary small-medium w-full text-orange-500')}
+            >
+              <UserCircle className="h-5 w-5 lg:hidden" />
+              <span className="max-lg:hidden">Create Tag</span>
+            </Link>
+          </div>
       </div>
       <section className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 2xl:grid-cols-4">
         {tags.length > 0 ? (
