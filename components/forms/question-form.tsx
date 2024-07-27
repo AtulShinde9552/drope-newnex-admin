@@ -67,6 +67,7 @@ export default function QuestionForm({ userId, type, questionDetails }: Props) {
       } else {
         form.trigger();
       }
+      
     }
   };
 
