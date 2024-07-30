@@ -96,7 +96,13 @@ export const getQuestionsByTagId = async (params: GetQuestionsByTagIdParams) => 
       match: searchQuery ? { title: { $regex: searchQuery, $options: 'i' } } : {},
     });
     const isNext = tag2.questions.length > skip + questions.length;
-    return { tagName: tag.name, questions, isNext };
+    return {
+      companyWeb: tag.Companywebsite,
+      tagName: tag.name,
+      companyName: tag.Developedby,
+      questions,
+      isNext,
+    };
   } catch (error) {
     console.log(error);
     throw error;
@@ -117,13 +123,32 @@ export const getPopularTags = async () => {
   }
 };
 
-
-export const createTag = async ({ name, description, Developedby, Companywebsite }: { name: string; description: string; Developedby: string; Companywebsite: string }) => {
+export const createTag = async ({
+  name,
+  description,
+  Developedby,
+  Companywebsite,
+}: {
+  name: string;
+  description: string;
+  Developedby: string;
+  Companywebsite: string;
+}) => {
   try {
-    if (!name || typeof name !== 'string' || name.trim() === '' ||
-        !description || typeof description !== 'string' || description.trim() === '' ||
-        !Developedby || typeof Developedby !== 'string' || Developedby.trim() === '' ||
-        !Companywebsite || typeof Companywebsite !== 'string' || Companywebsite.trim() === '') {
+    if (
+      !name ||
+      typeof name !== 'string' ||
+      name.trim() === '' ||
+      !description ||
+      typeof description !== 'string' ||
+      description.trim() === '' ||
+      !Developedby ||
+      typeof Developedby !== 'string' ||
+      Developedby.trim() === '' ||
+      !Companywebsite ||
+      typeof Companywebsite !== 'string' ||
+      Companywebsite.trim() === ''
+    ) {
       throw new Error('Invalid input');
     }
 

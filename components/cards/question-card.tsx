@@ -24,7 +24,7 @@ export default function QuestionCard({ question, clerkId }: Props) {
           {getTimeStamp(createdAt)} ago
         </p>
         <div className="flex items-center justify-between">
-          <Link href={`/question/${question._id}`}>
+          <Link href={''}>
             <h3 className="h3-semibold text-dark200_light900 line-clamp-1">{title}</h3>
           </Link>
           <SignedIn>
@@ -64,7 +64,7 @@ export default function QuestionCard({ question, clerkId }: Props) {
               - asked {getTimeStamp(createdAt)} ago
             </p>
           </div>
-          <div className="flex items-center gap-4 max-md:justify-end max-sm:justify-between">
+          {/* <div className="flex items-center gap-4 max-md:justify-end max-sm:justify-between">
             <div className="flex items-center gap-1">
               <ThumbsUp className="h-3.5 w-3.5 stroke-blue-500" />
               {getFormatNumber(upvotes.length)} {upvotes.length > 1 ? 'Votes' : 'Vote'}
@@ -77,7 +77,7 @@ export default function QuestionCard({ question, clerkId }: Props) {
               <Eye className="h-3.5 w-3.5 stroke-slate-500" />
               {getFormatNumber(views)} {views > 1 ? 'Views' : 'View'}
             </div>
-          </div>
+          </div> */}
         </div>
         <hr className="mt-2" />
       </div>
