@@ -39,7 +39,7 @@ export async function generateMetadata(
 export default async function Profile({ params, searchParams }: ParamsSearchProps) {
   const { userId: clerkId } = auth();
   const userInfo = await getUserInfo(params?.id!);
-  const { user, totalQuestions, totalAnswers, badgeCounts } = userInfo;
+  const { user, totalQuestions, totalAnswers} = userInfo;
 
   return (
     <>
@@ -99,10 +99,9 @@ export default async function Profile({ params, searchParams }: ParamsSearchProp
         totalQuestions={totalQuestions}
         totalAnswers={totalAnswers}
         reputation={user.reputation}
-        badges={badgeCounts}
       />
       <div>
-        {/* <Tabs defaultValue="top-posts" className="mt-10">
+        <Tabs defaultValue="top-posts" className="mt-10">
           <TabsList className="mb-2">
             <TabsTrigger
               value="top-posts"
@@ -123,7 +122,7 @@ export default async function Profile({ params, searchParams }: ParamsSearchProp
           <TabsContent value="answers">
             <AnswerTabs userId={user._id} searchParams={searchParams} />
           </TabsContent>
-        </Tabs> */}
+        </Tabs>
       </div>
     </>
   );

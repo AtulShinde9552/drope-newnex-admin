@@ -15,7 +15,7 @@ interface Props {
 
 export default function QuestionCard({ question, clerkId }: Props) {
   const { id, title, tags, views, upvotes, author, answers, createdAt } = question;
-  const showActionButtons = clerkId && clerkId === author?.clerkId;
+  const showActionButtons = clerkId && clerkId 
 
   return (
     <div className="card-wrapper rounded-lg p-9 sm:px-11">

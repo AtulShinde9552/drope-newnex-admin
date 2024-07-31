@@ -45,10 +45,9 @@ interface Props {
   totalQuestions: number;
   totalAnswers: number;
   reputation: number;
-  badges: BadgeCounts;
 }
 
-export default function Stats({ totalQuestions, totalAnswers, reputation, badges }: Props) {
+export default function Stats({ totalQuestions, totalAnswers, reputation }: Props) {
   return (
     <div className="mt-7">
       <h4 className="h3-semibold text-dark200_light900">Stats</h4>
@@ -76,17 +75,6 @@ export default function Stats({ totalQuestions, totalAnswers, reputation, badges
             <p className="body-medium text-dark400_light700">Answers</p>
           </div>
         </div>
-        <StatsCard imgUrl="/assets/icons/gold-medal.svg" value={badges.GOLD} title="Gold Badges" />
-        <StatsCard
-          imgUrl="/assets/icons/silver-medal.svg"
-          value={badges.SILVER}
-          title="Silver Badges"
-        />
-        <StatsCard
-          imgUrl="/assets/icons/bronze-medal.svg"
-          value={badges.BRONZE}
-          title="Bronze Badges"
-        />
       </div>
     </div>
   );
