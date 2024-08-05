@@ -171,3 +171,45 @@ export const createTag = async ({
     throw error;
   }
 };
+
+export const updateTag = async (params: {
+  id: string;
+  name?: string;
+  description?: string;
+  Developedby?: string;
+  Companywebsite?: string;
+}) => {
+  try {
+    const { id, name, description, Developedby, Companywebsite } = params;
+
+    if (!id || typeof id !== 'string' || id.trim() === '') {
+      throw new Error('Invalid tag ID');
+    }
+
+    const updateFields: Partial<ITag> = {};
+
+    if (name && typeof name === 'string' && name.trim() !== '') {
+      updateFields.name = name.trim();
+    }
+    if (description && typeof description === 'string' && description.trim() !== '') {
+      updateFields.description = description.trim();
+    }
+    if (Developedby && typeof Developedby === 'string' && Developedby.trim() !== '') {
+      updateFields.Developedby = Developedby.trim();
+    }
+    if (Companywebsite && typeof Companywebsite === 'string' && Companywebsite.trim() !== '') {
+      updateFields.Companywebsite = Companywebsite.trim();
+    }
+
+    const updatedTag = await Tag.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (!updatedTag) {
+      throw new Error('Tag not found');
+    }
+
+    return updatedTag;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
