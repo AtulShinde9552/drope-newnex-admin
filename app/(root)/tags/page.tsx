@@ -30,10 +30,7 @@ interface Tag {
 const truncateDescription = (description?: string, wordLimit = 6) => {
   if (!description) return '';
   const words = description.split(' ');
-  if (words.length > wordLimit) {
-    return words.slice(0, wordLimit).join(' ') + '...';
-  }
-  return description;
+  return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : description;
 };
 
 export default function TagsPage({ searchParams }: SearchParamsProps) {
@@ -44,28 +41,27 @@ export default function TagsPage({ searchParams }: SearchParamsProps) {
 
   useEffect(() => {
     const fetchTags = async () => {
-      const result = await getAllTags({
-        searchQuery: searchParams.q,
-        filter: searchParams.filter,
-        page: Number(searchParams.page) || 1,
-      });
-      setTags(result.tags);
-      setIsNext(result.isNext);
+      try {
+        const result = await getAllTags({
+          searchQuery: searchParams.q,
+          filter: searchParams.filter,
+          page: Number(searchParams.page) || 1,
+        });
+        setTags(result.tags);
+        setIsNext(result.isNext);
+      } catch (error) {
+        console.error('Failed to fetch tags:', error);
+      }
     };
     fetchTags();
-  }, [searchParams]);
+  }, [searchParams]); 
 
   const handleCreateTag = async (tagData: { name: string; description: string; Developedby: string; Companywebsite: string; }) => {
     try {
       await createTag(tagData);
-      // Reload the tags list
-      const result = await getAllTags({
-        searchQuery: searchParams.q,
-        filter: searchParams.filter,
-        page: Number(searchParams.page) || 1,
-      });
-      setTags(result.tags);
-      setIsNext(result.isNext);
+      // Optimistic update
+      setTags((prevTags) => [...prevTags, { ...tagData, _id: 'temp-id', questions: { length: 0 } }]);
+      setShowForm(false);
     } catch (error) {
       console.error('Failed to create tag:', error);
     }
@@ -74,7 +70,7 @@ export default function TagsPage({ searchParams }: SearchParamsProps) {
   const handleUpdateTag = async (tagData: { id: string; name: string; description: string; Developedby: string; Companywebsite: string; }) => {
     try {
       await updateTag(tagData);
-      // Update the tag in the current state
+      // Optimistic update
       setTags((prevTags) =>
         prevTags.map((tag) =>
           tag._id === tagData.id ? { ...tag, ...tagData } : tag
@@ -164,12 +160,20 @@ export default function TagsPage({ searchParams }: SearchParamsProps) {
       <Pagination pageNumber={Number(searchParams.page) || 1} isNext={isNext} />
       {editingTag && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-md shadow-md">
-            <TagEditForm
-              tag={editingTag}
-              onCancel={() => setEditingTag(null)}
-              onUpdate={handleUpdateTag}
-            />
+          <div className="bg-white dark:bg-gray-800 w-1/2 rounded-md shadow-md">
+          <TagEditForm
+  tag={editingTag}
+  onCancel={() => setEditingTag(null)}
+  onUpdate={(updatedTag) => {
+    handleUpdateTag(updatedTag);
+    // Directly update the editing tag to ensure the UI reflects the change immediately
+    setTags((prevTags) =>
+      prevTags.map((tag) =>
+        tag._id === updatedTag.id ? { ...tag, ...updatedTag } : tag
+      )
+    );
+  }}
+/>
           </div>
         </div>
       )}

@@ -135,6 +135,15 @@ export const createTag = async ({
   Companywebsite: string;
 }) => {
   try {
+    const allowedTagNames = [
+      "Aerospace Engineering",
+      "Chemical Engineering",
+      "Civil Engineering",
+      "Electrical Engineering",
+      "Mechanical Engineering",
+      "Petroleum Engineering",
+    ];
+
     if (
       !name ||
       typeof name !== 'string' ||
@@ -150,6 +159,10 @@ export const createTag = async ({
       Companywebsite.trim() === ''
     ) {
       throw new Error('Invalid input');
+    }
+
+    if (!allowedTagNames.includes(name.trim())) {
+      throw new Error(`Tag name must be one of the following: ${allowedTagNames.join(', ')}`);
     }
 
     const existingTag = await Tag.findOne({ name: name.trim() });
