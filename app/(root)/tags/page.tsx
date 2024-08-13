@@ -15,8 +15,8 @@ import { cn } from '@/lib/utils';
 import Pagination from '@/components/pagination';
 import { UserCircle } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
-import TagForm from '@/components/forms/tag-form'; // Import TagForm component
-import TagEditForm from '@/components/forms/tagupdate'; // Import TagEditForm component
+import TagForm from '@/components/forms/tag-form';
+import TagEditForm from '@/components/forms/tagupdate';
 
 interface Tag {
   _id: string;
